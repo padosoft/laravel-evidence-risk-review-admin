@@ -13,3 +13,6 @@
 - W1 keeps the Blade shell usable before SPA assets exist: missing Vite manifest should render `evr-admin-assets-missing` instead of throwing.
 - On this workstation, `composer validate --strict` can hang during publish/network checks for this new package. `composer validate --strict --no-check-publish` passed once, and `composer update --no-progress --prefer-dist --no-interaction --no-ansi` completed, so record later validate timeouts separately from code/test failures and retry on the next subtask.
 - Testbench HTTP tests need a stable `app.key`; set it in the base `tests/TestCase.php` rather than weakening route tests.
+- Vite 8 with TypeScript needs `moduleResolution: "Bundler"` and `defineConfig` from `vitest/config` when `vite.config.ts` contains a `test` block.
+- Node 25 emits `--localstorage-file` warnings under Vitest/jsdom on this workstation. The tests still pass; avoid assuming `window.localStorage.clear` exists in setup hooks.
+- `npm audit` initially flagged Vite/esbuild dev vulnerabilities; upgrading to Vite `^8.0.16` cleared the audit without changing runtime dependencies.
