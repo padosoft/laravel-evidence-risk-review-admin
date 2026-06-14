@@ -14,7 +14,7 @@ describe('Evidence Risk Review endpoints', () => {
   });
 
   it('fetches profiles and taxonomy', async () => {
-    await expect(api.listProfiles()).resolves.toHaveLength(1);
+    await expect(api.listProfiles()).resolves.toEqual(expect.arrayContaining([expect.objectContaining({ key: 'clinical' })]));
     await expect(api.getProfile('clinical')).resolves.toMatchObject({ key: 'clinical' });
     await expect(api.taxonomy()).resolves.toEqual(
       expect.arrayContaining([expect.objectContaining({ key: 'official', rank: 5 })]),

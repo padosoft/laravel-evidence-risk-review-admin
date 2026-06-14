@@ -1,7 +1,14 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { PropsWithChildren, useMemo } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, Route, Routes } from 'react-router-dom';
 import { EvidenceRiskReviewAdminAppProps, routeBase, runtimeConfig } from './config';
+import { DashboardPage } from './pages/DashboardPage';
+import { DeferredPage } from './pages/DeferredPage';
+import { ProfileDetailPage, ProfilesPage } from './pages/ProfilesPage';
+import { ReviewDetailPage } from './pages/ReviewDetailPage';
+import { ReviewsPage } from './pages/ReviewsPage';
+import { TaxonomyPage } from './pages/TaxonomyPage';
+import { Shell } from './shell/Shell';
 
 function Providers({
   children,
@@ -26,7 +33,7 @@ function Providers({
   const content = <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 
   if (embedded) {
-    return content;
+    return <MemoryRouter>{content}</MemoryRouter>;
   }
 
   return <BrowserRouter basename={routeBase(resolved)}>{content}</BrowserRouter>;
@@ -37,18 +44,20 @@ export function EvidenceRiskReviewAdminApp({ config, embedded = false }: Evidenc
 
   return (
     <Providers config={resolved} embedded={embedded}>
-      <main className="evr-app-shell" data-testid="evr-app" data-state="ready" aria-busy="false">
-        <section className="evr-app-shell__panel" data-testid="evr-spa-foundation">
-          <h1>Evidence Risk Review Admin</h1>
-          <p>SPA foundation loaded. Read screens are implemented in W3.</p>
-          <dl>
-            <dt>API base</dt>
-            <dd>{resolved.api_base}</dd>
-            <dt>Mount prefix</dt>
-            <dd>{resolved.mount_prefix}</dd>
-          </dl>
-        </section>
-      </main>
+      <div data-testid="evr-app" data-state="ready" aria-busy="false" data-api-base={resolved.api_base}>
+        <Routes>
+          <Route element={<Shell embedded={embedded} />}>
+            <Route index element={<DashboardPage />} />
+            <Route path="/reviews" element={<ReviewsPage />} />
+            <Route path="/reviews/:reviewId" element={<ReviewDetailPage />} />
+            <Route path="/profiles" element={<ProfilesPage />} />
+            <Route path="/profiles/:key" element={<ProfileDetailPage />} />
+            <Route path="/taxonomy" element={<TaxonomyPage />} />
+            <Route path="/try" element={<DeferredPage title="Submit for review" testId="evr-try" />} />
+            <Route path="/settings" element={<DeferredPage title="Settings" testId="evr-settings" />} />
+          </Route>
+        </Routes>
+      </div>
     </Providers>
   );
 }
