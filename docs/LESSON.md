@@ -18,3 +18,5 @@
 - `npm audit` initially flagged Vite/esbuild dev vulnerabilities; upgrading to Vite `^8.0.16` cleared the audit without changing runtime dependencies.
 - Once SPA source exists, the standalone architecture test must include `resources/js`; otherwise host-specific leakage could enter through frontend code while PHP tests stay green.
 - W3 screen tests should assert `data-state` transitions and stable `evr-*` testids rather than CSS classes, matching the future Playwright selector strategy.
+- For W4 mutation tests, use a real MSW `POST /reviews` failure and click the submit button; this keeps the R16 failure path honest instead of asserting an injected error state.
+- Settings tests need a deterministic localStorage polyfill because Node 25's built-in localStorage warning does not guarantee a browser-compatible API in Vitest workers.
