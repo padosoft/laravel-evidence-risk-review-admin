@@ -11,7 +11,7 @@
 - Created and switched to bootstrap branch `task/bootstrap-agent-rules`.
 - Bootstrap objective: create durable agent/rule/skill/plan docs before application code, adapted to the admin package and the final-deep-review strategy.
 
-## Open Items
+## Bootstrap And W1
 
 - Bootstrap PR #1 was merged to `main`.
 - Started W1 Package Skeleton on `macro/w1-package-skeleton` and subtask branch `task/w1-package-skeleton`.
@@ -22,15 +22,40 @@
 - W1 local gates passed:
   - `vendor/bin/pint --test`
   - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
-  - `vendor/bin/phpunit` (`6 tests, 169 assertions`)
+  - `vendor/bin/phpunit` (`6 tests, 269 assertions`)
 - Subtask PR #2 was merged into `macro/w1-package-skeleton`.
 - W1 macro local gates passed after subtask merge:
   - `vendor/bin/pint --test`
   - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
-  - `vendor/bin/phpunit` (`6 tests, 169 assertions`)
+  - `vendor/bin/phpunit` (`6 tests, 269 assertions`)
+- Subtask PR #4 was merged into `macro/w2-spa-foundation`.
+- W2 macro local gates passed after subtask merge:
+  - `npm run typecheck`
+  - `npm run build`
+  - `npm run test` (`4 files, 11 tests`)
+  - `npm audit`
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`6 tests, 269 assertions`)
   - `git diff --check origin/main...HEAD`
+  - `git diff --check origin/main...HEAD`
+- W1 macro PR #3 was merged into `main`.
+
+## W2 SPA Foundation
+
+- Started W2 SPA Foundation on `macro/w2-spa-foundation` and subtask branch `task/w2-spa-foundation`.
+- W2 objective: Vite/React/TypeScript foundation, Tailwind pipeline, standalone/embedded React app export, runtime config helpers, API client/errors/types/endpoints, TanStack Query hooks, MSW/Vitest setup, and data-layer tests.
+- Implemented W2 foundation files under `resources/js`, `resources/css`, `tests/js`, and frontend config files.
+- `npm install` initially reported Vite/esbuild dev advisories; upgrading to Vite `^8.0.16` cleared `npm audit`.
+- W2 local gates passed:
+  - `npm run typecheck`
+  - `npm run build`
+  - `npm run test` (`4 files, 11 tests`)
+  - `npm audit`
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`6 tests, 169 assertions`)
 
 ## Open Items
 
-- Run W1 local gates and fix any failures.
-- Open and merge W1 macro PR into `main`.
+- Open and merge W2 macro PR into `main`.

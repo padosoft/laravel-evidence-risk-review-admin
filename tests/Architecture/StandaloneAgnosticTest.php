@@ -34,6 +34,7 @@ final class StandaloneAgnosticTest extends TestCase
             $root.'/src',
             $root.'/config',
             $root.'/routes',
+            $root.'/resources/js',
             $root.'/resources/views',
         ];
 
