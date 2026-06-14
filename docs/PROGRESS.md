@@ -84,4 +84,20 @@
 
 ## Open Items
 
-- Open and merge W3 macro PR into `main`.
+- W3 macro PR #7 was merged into `main`.
+- Started W4 Write Screen And Settings on `macro/w4-write-settings` and subtask branch `task/w4-write-settings`.
+- W4 objective: implement Try submit form, validation error surfacing, dry-run behavior, LLM unavailable banner, Settings theme toggle, runtime config display, and connection probe.
+- Implemented W4 `TryPage` and `SettingsPage`, replaced deferred routes, added form CSS, and added Vitest coverage for submit failure/success/dry-run/503 plus settings theme/probe success/error.
+- W4 local gates passed:
+  - `npm run typecheck`
+  - `npm run build`
+  - `npm run test` (`10 files, 27 tests`)
+  - `npm audit`
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`6 tests, 379 assertions`)
+  - `git diff --check`
+
+## Open Items
+
+- Merge W4 subtask PR into `macro/w4-write-settings`, then macro PR into `main`.

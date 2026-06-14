@@ -3,11 +3,12 @@ import { PropsWithChildren, useMemo } from 'react';
 import { BrowserRouter, MemoryRouter, Route, Routes } from 'react-router-dom';
 import { EvidenceRiskReviewAdminAppProps, routeBase, runtimeConfig } from './config';
 import { DashboardPage } from './pages/DashboardPage';
-import { DeferredPage } from './pages/DeferredPage';
 import { ProfileDetailPage, ProfilesPage } from './pages/ProfilesPage';
 import { ReviewDetailPage } from './pages/ReviewDetailPage';
 import { ReviewsPage } from './pages/ReviewsPage';
+import { SettingsPage } from './pages/SettingsPage';
 import { TaxonomyPage } from './pages/TaxonomyPage';
+import { TryPage } from './pages/TryPage';
 import { Shell } from './shell/Shell';
 
 function Providers({
@@ -53,8 +54,8 @@ export function EvidenceRiskReviewAdminApp({ config, embedded = false }: Evidenc
             <Route path="/profiles" element={<ProfilesPage />} />
             <Route path="/profiles/:key" element={<ProfileDetailPage />} />
             <Route path="/taxonomy" element={<TaxonomyPage />} />
-            <Route path="/try" element={<DeferredPage title="Submit for review" testId="evr-try" />} />
-            <Route path="/settings" element={<DeferredPage title="Settings" testId="evr-settings" />} />
+            <Route path="/try" element={<TryPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
           </Route>
         </Routes>
       </div>
