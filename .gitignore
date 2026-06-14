@@ -1,10 +1,12 @@
 /vendor/
+/composer.lock
 /node_modules/
 /.env
 /.env.*
 !/.env.example
 /.phpunit.cache/
 /.phpunit.result.cache
+/.phpstan-cache/
 /coverage/
 /playwright-report/
 /test-results/
