@@ -16,3 +16,5 @@
 - Vite 8 with TypeScript needs `moduleResolution: "Bundler"` and `defineConfig` from `vitest/config` when `vite.config.ts` contains a `test` block.
 - Node 25 emits `--localstorage-file` warnings under Vitest/jsdom on this workstation. The tests still pass; avoid assuming `window.localStorage.clear` exists in setup hooks.
 - `npm audit` initially flagged Vite/esbuild dev vulnerabilities; upgrading to Vite `^8.0.16` cleared the audit without changing runtime dependencies.
+- Once SPA source exists, the standalone architecture test must include `resources/js`; otherwise host-specific leakage could enter through frontend code while PHP tests stay green.
+- W3 screen tests should assert `data-state` transitions and stable `evr-*` testids rather than CSS classes, matching the future Playwright selector strategy.

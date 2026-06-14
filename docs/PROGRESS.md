@@ -58,4 +58,30 @@
 
 ## Open Items
 
-- Open and merge W2 macro PR into `main`.
+- W2 macro PR #5 was merged into `main`.
+- Started W3 Read Screens on `macro/w3-read-screens` and subtask branch `task/w3-read-screens`.
+- W3 objective: implement dashboard, review log, review detail, profiles list/detail, and taxonomy read-only screens using the W2 data layer and the supplied admin template direction.
+- Implemented W3 shell, navigation, badge/state components, read-screen routes, responsive admin CSS, and per-screen Vitest coverage for ready/empty/error/notfound/filter states.
+- W3 local gates passed:
+  - `npm run typecheck`
+  - `npm run build`
+  - `npm run test` (`8 files, 20 tests`)
+  - `npm audit`
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`6 tests, 359 assertions`)
+  - `git diff --check`
+- Subtask PR #6 was merged into `macro/w3-read-screens`.
+- W3 macro local gates passed after subtask merge:
+  - `npm run typecheck`
+  - `npm run build`
+  - `npm run test` (`8 files, 20 tests`)
+  - `npm audit`
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`6 tests, 359 assertions`)
+  - `git diff --check origin/main...HEAD`
+
+## Open Items
+
+- Open and merge W3 macro PR into `main`.

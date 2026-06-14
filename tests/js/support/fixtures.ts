@@ -14,6 +14,13 @@ export const profilesFixture: ProfileMetadata[] = [
     min_tier: { definitive: 5, likely: 3, tentative: 1 },
     verdict_policy: { never_auto_remove: true },
   },
+  {
+    key: 'empty',
+    label: 'Empty',
+    description: 'Profile used to exercise empty states',
+    enabled_checks: ['tier_floor'],
+    min_tier: { definitive: 5, likely: 3, tentative: 1 },
+  },
 ];
 
 export const reviewLogFixture: Paginated<ReviewLogRow> = {
