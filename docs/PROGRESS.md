@@ -71,7 +71,17 @@
   - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
   - `vendor/bin/phpunit` (`6 tests, 359 assertions`)
   - `git diff --check`
+- Subtask PR #6 was merged into `macro/w3-read-screens`.
+- W3 macro local gates passed after subtask merge:
+  - `npm run typecheck`
+  - `npm run build`
+  - `npm run test` (`8 files, 20 tests`)
+  - `npm audit`
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`6 tests, 359 assertions`)
+  - `git diff --check origin/main...HEAD`
 
 ## Open Items
 
-- Merge W3 subtask PR into `macro/w3-read-screens`, then macro PR into `main`.
+- Open and merge W3 macro PR into `main`.
