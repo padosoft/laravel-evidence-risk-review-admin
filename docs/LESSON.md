@@ -9,3 +9,7 @@
 - Process from the core package carries forward: durable `AGENTS.md`, `CLAUDE.md`, `docs/RULES.md`, `docs/PROGRESS.md`, `docs/LESSON.md`, repo-local skill, Claude skills, branch/PR gates, and final release checklist.
 - Review strategy carries forward from the end of the core roadmap: do not launch per-W AI reviews; run one deep Copilot/Codex review at the end while keeping local tests and CI strict.
 - Copilot PR review engagement must be verified through requested reviewers, review requests, reviews, or comments; command success alone is not enough. If Copilot is blocked at final deep review, trigger Codex Connector with `@codex review`.
+- During this session `apply_patch` initially targeted the previous core repo because the session cwd still pointed there. Use absolute paths for admin package patches in this conversation unless the tool cwd is confirmed.
+- W1 keeps the Blade shell usable before SPA assets exist: missing Vite manifest should render `evr-admin-assets-missing` instead of throwing.
+- On this workstation, `composer validate --strict` can hang during publish/network checks for this new package. `composer validate --strict --no-check-publish` passed once, and `composer update --no-progress --prefer-dist --no-interaction --no-ansi` completed, so record later validate timeouts separately from code/test failures and retry on the next subtask.
+- Testbench HTTP tests need a stable `app.key`; set it in the base `tests/TestCase.php` rather than weakening route tests.

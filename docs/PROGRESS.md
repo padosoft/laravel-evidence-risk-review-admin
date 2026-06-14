@@ -13,5 +13,24 @@
 
 ## Open Items
 
-- Finish Bootstrap docs and merge the bootstrap exception PR to `main`.
-- Start `macro/w1-package-skeleton` and first W1 subtask after bootstrap merge.
+- Bootstrap PR #1 was merged to `main`.
+- Started W1 Package Skeleton on `macro/w1-package-skeleton` and subtask branch `task/w1-package-skeleton`.
+- W1 objective: Composer/Testbench skeleton, service provider, package config, catch-all web route, PanelController, Blade shell with missing-assets fallback, and PHPUnit architecture/config/mount guardrails.
+- W1 guardrails: `composer validate --strict --no-interaction --no-ansi`, dependency install, `vendor/bin/pint --test`, `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`, and `vendor/bin/phpunit`. No SPA source exists yet, so Vitest/Playwright are not applicable until W2/W5.
+- Implemented W1 skeleton: `composer.json`, service provider, config, route catch-all, PanelController, Blade panel shell, PHPUnit/PHPStan/Pint config, and tests for config defaults, panel mount/deep links, middleware application, and standalone architecture.
+- Composer status: `composer update --no-progress --prefer-dist --no-interaction --no-ansi` completed and installed dependencies. `composer validate --strict --no-check-publish --no-interaction --no-ansi` completed once with `composer.json is valid`; later repeated validate attempts intermittently timed out even from `%TEMP%`, so treat the full publish/network validation as a local Composer/Packagist blocker to retry on the next pass.
+- W1 local gates passed:
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`6 tests, 169 assertions`)
+- Subtask PR #2 was merged into `macro/w1-package-skeleton`.
+- W1 macro local gates passed after subtask merge:
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`6 tests, 169 assertions`)
+  - `git diff --check origin/main...HEAD`
+
+## Open Items
+
+- Run W1 local gates and fix any failures.
+- Open and merge W1 macro PR into `main`.
