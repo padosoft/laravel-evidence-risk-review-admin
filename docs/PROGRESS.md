@@ -27,7 +27,17 @@
 - W1 macro local gates passed after subtask merge:
   - `vendor/bin/pint --test`
   - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
-  - `vendor/bin/phpunit` (`6 tests, 169 assertions`)
+  - `vendor/bin/phpunit` (`6 tests, 269 assertions`)
+- Subtask PR #4 was merged into `macro/w2-spa-foundation`.
+- W2 macro local gates passed after subtask merge:
+  - `npm run typecheck`
+  - `npm run build`
+  - `npm run test` (`4 files, 11 tests`)
+  - `npm audit`
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`6 tests, 269 assertions`)
+  - `git diff --check origin/main...HEAD`
   - `git diff --check origin/main...HEAD`
 - W1 macro PR #3 was merged into `main`.
 
@@ -48,4 +58,4 @@
 
 ## Open Items
 
-- Merge W2 subtask PR into `macro/w2-spa-foundation`, then macro PR into `main`.
+- Open and merge W2 macro PR into `main`.
