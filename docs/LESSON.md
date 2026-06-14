@@ -1,0 +1,11 @@
+# Lessons
+
+## 2026-06-15
+
+- The repository started as a clean admin stub on `main` with `LICENSE`, a placeholder `README.md`, and untracked `resources/screenshots/*` assets already present. Keep those screenshot assets; they are likely intended for the final README.
+- The canonical admin spec is stored outside the repo at `%USERPROFILE%\Downloads\laravel-evidence-risk-review-admin-template\padosoft-laravel-evidence-risk-review-admin-SPEC-PLAN.md`; keep `docs/IMPLEMENTATION_PLAN.md` current so future sessions are not blocked by missing chat context.
+- The design handoff requires reading `project/index.html` and every imported prototype file. The prototype is accepted design input, not production code to ship unchanged.
+- The core package `padosoft/laravel-evidence-risk-review` is already registered on Packagist. The admin still keeps it as `suggest` instead of `require` because it consumes the core HTTP API and must support Laravel 11/12/13, while the core package may have a narrower Laravel constraint.
+- Process from the core package carries forward: durable `AGENTS.md`, `CLAUDE.md`, `docs/RULES.md`, `docs/PROGRESS.md`, `docs/LESSON.md`, repo-local skill, Claude skills, branch/PR gates, and final release checklist.
+- Review strategy carries forward from the end of the core roadmap: do not launch per-W AI reviews; run one deep Copilot/Codex review at the end while keeping local tests and CI strict.
+- Copilot PR review engagement must be verified through requested reviewers, review requests, reviews, or comments; command success alone is not enough. If Copilot is blocked at final deep review, trigger Codex Connector with `@codex review`.
