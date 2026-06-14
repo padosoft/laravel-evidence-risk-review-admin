@@ -97,7 +97,17 @@
   - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
   - `vendor/bin/phpunit` (`6 tests, 379 assertions`)
   - `git diff --check`
+- Subtask PR #8 was merged into `macro/w4-write-settings`.
+- W4 macro local gates passed after subtask merge:
+  - `npm run typecheck`
+  - `npm run build`
+  - `npm run test` (`10 files, 27 tests`)
+  - `npm audit`
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`6 tests, 379 assertions`)
+  - `git diff --check origin/main...HEAD`
 
 ## Open Items
 
-- Merge W4 subtask PR into `macro/w4-write-settings`, then macro PR into `main`.
+- Open and merge W4 macro PR into `main`.
