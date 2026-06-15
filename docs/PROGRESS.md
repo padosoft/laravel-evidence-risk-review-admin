@@ -278,7 +278,9 @@
   - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
   - `vendor/bin/pint --test`
   - `git diff --check`
+- Codex Connector final pass on commit `51b5c39` reported: "Didn't find any major issues."
+- PR #16 (`task/w8-hardening-release` -> `macro/w8-hardening-release`) passed mandatory CI and was merged into the W8 macro branch.
 
 ## Open Items
 
-- Commit and push React peer dependency fix, rerun CI and final Codex review on the new commit, then merge, tag `v1.0.0`, and publish GitHub Release.
+- Open W8 macro PR into `main`, require CI green, merge, tag `v1.0.0`, and publish GitHub Release.
