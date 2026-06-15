@@ -143,6 +143,7 @@ The bundle exports:
 
 ```tsx
 import { EvidenceRiskReviewAdminApp } from '@padosoft/laravel-evidence-risk-review-admin';
+import '@padosoft/laravel-evidence-risk-review-admin/style.css';
 
 <EvidenceRiskReviewAdminApp
   embedded
@@ -150,7 +151,7 @@ import { EvidenceRiskReviewAdminApp } from '@padosoft/laravel-evidence-risk-revi
 />
 ```
 
-Use embedded mode when a host SPA provides its own navigation chrome.
+Use embedded mode when a host SPA provides its own navigation chrome. The package ships an ES module entry at `dist/index.js` plus `dist/index.d.ts` and `dist/style.css` for this flow.
 
 ## Testing
 

@@ -1,10 +1,37 @@
 import { describe, expect, it } from 'vitest';
+import { normalizeApiBase, routeBase, runtimeConfig } from '../../../../resources/js/config';
 import { createApiClient, resolveApiBase } from '../../../../resources/js/lib/api/client';
 import { FeatureDisabledError, NetworkError, normalizeApiError, ValidationError } from '../../../../resources/js/lib/api/errors';
 
 describe('API client', () => {
   it('resolves the runtime API base without trailing slash', () => {
     expect(resolveApiBase({ api_base: '/custom/api/' })).toBe('/custom/api');
+  });
+
+  it('normalizes blank and whitespace-padded runtime config', () => {
+    expect(normalizeApiBase('   ')).toBe('/evidence-risk-review/api');
+
+    const config = runtimeConfig({
+      api_base: ' /custom/api/ ',
+      mount_prefix: '/admin/custom/',
+      theme_default: 'invalid',
+      asset_path: '/assets/admin/',
+    });
+
+    expect(config).toEqual({
+      api_base: '/custom/api',
+      mount_prefix: 'admin/custom',
+      theme_default: 'dark',
+      asset_path: 'assets/admin',
+    });
+    expect(routeBase(config)).toBe('/admin/custom');
+  });
+
+  it('preserves root mount prefixes for root-mounted admin panels', () => {
+    const config = runtimeConfig({ mount_prefix: '/' });
+
+    expect(config.mount_prefix).toBe('');
+    expect(routeBase(config)).toBe('/');
   });
 
   it('creates an axios client with credentials enabled', () => {

@@ -1,12 +1,11 @@
 import axios, { AxiosInstance } from 'axios';
-import { EvidenceRiskReviewAdminRuntimeConfig, runtimeConfig } from '../../config';
+import { EvidenceRiskReviewAdminRuntimeConfig, normalizeApiBase, runtimeConfig } from '../../config';
 import { normalizeApiError } from './errors';
 
 export function resolveApiBase(config?: Partial<EvidenceRiskReviewAdminRuntimeConfig>): string {
   const envBase = import.meta.env.VITE_API_BASE as string | undefined;
-  const resolved = envBase || runtimeConfig(config).api_base;
 
-  return resolved.replace(/\/+$/g, '');
+  return normalizeApiBase(envBase || runtimeConfig(config).api_base);
 }
 
 export function createApiClient(config?: Partial<EvidenceRiskReviewAdminRuntimeConfig>): AxiosInstance {

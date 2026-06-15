@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { runtimeConfig } from '../config';
-import { endpoints } from '../lib/api/endpoints';
+import { useEvidenceRiskReviewEndpoints } from '../lib/queries';
 
 type ProbeState = 'idle' | 'loading' | 'ready' | 'error';
 
 export function SettingsPage() {
   const config = runtimeConfig();
+  const endpoints = useEvidenceRiskReviewEndpoints();
   const [theme, setTheme] = useState(() => document.documentElement.getAttribute('data-theme') || config.theme_default || 'dark');
   const [probeState, setProbeState] = useState<ProbeState>('idle');
   const [probeMessage, setProbeMessage] = useState('');
