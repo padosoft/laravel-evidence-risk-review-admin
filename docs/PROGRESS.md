@@ -196,7 +196,12 @@
   - `npm run test` (`10 files, 27 tests`)
   - `vendor/bin/phpunit` (`8 tests, 392 assertions`)
 - W7 CI-fix Playwright local status: `npm run test:e2e` timed out three times on this workstation and left a Node server on port 4173; stale processes were killed and the approved local exemption is applied. Online Playwright CI remains mandatory before merge.
+- PR #14 CI passed online across PHP 8.3/8.4/8.5 matrix cells, Frontend, and Playwright; subtask PR #14 was merged into `macro/w7-dx-docs-ci`.
+- W7 macro gate status after subtask merge:
+  - Online CI from PR #14 passed and covered the W7 workflow.
+  - Local post-fix gates passed for npm 10 lock, YAML, composer validate, audit, typecheck, build, Vitest, and PHPUnit.
+  - Local Playwright remains exempt after three timeouts; online Playwright passed on PR #14.
 
 ## Open Items
 
-- Merge W7 subtask PR into `macro/w7-dx-docs-ci`, then macro PR into `main`; after W7, CI checks are mandatory for every PR.
+- Open W7 macro PR into `main`; merge only after mandatory CI is green.
