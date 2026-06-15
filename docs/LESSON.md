@@ -20,3 +20,5 @@
 - W3 screen tests should assert `data-state` transitions and stable `evr-*` testids rather than CSS classes, matching the future Playwright selector strategy.
 - For W4 mutation tests, use a real MSW `POST /reviews` failure and click the submit button; this keeps the R16 failure path honest instead of asserting an injected error state.
 - Settings tests need a deterministic localStorage polyfill because Node 25's built-in localStorage warning does not guarantee a browser-compatible API in Vitest workers.
+- Playwright `page.goto('/')` resolves to the origin root, not the configured admin basename. Standalone E2E must visit `/admin/evidence-risk-review...` so BrowserRouter basename matches.
+- If a Playwright run times out while its web server is active, port 4173 can remain occupied; on Windows `netstat -ano | findstr :4173` identifies the process to stop.
