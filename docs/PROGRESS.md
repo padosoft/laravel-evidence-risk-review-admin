@@ -110,4 +110,21 @@
 
 ## Open Items
 
-- Open and merge W4 macro PR into `main`.
+- W4 macro PR #9 was merged into `main`.
+- Started W5 Playwright E2E on `macro/w5-playwright-e2e` and subtask branch `task/w5-playwright-e2e`.
+- W5 objective: add production-bundle Playwright E2E with external-core-only `page.route` mocks for smoke, dashboard success/failure, review filters/detail, try submit, and profiles/taxonomy.
+- Implemented `scripts/serve-e2e.mjs`, `playwright.config.ts`, E2E fixtures, and six Chromium scenarios.
+- First Playwright run timed out because tests used `/` while standalone BrowserRouter has basename `/admin/evidence-risk-review`; fixed tests to visit the real mount prefix and killed the stale server on port 4173.
+- W5 local gates passed:
+  - `npm run test:e2e` (`6 passed`)
+  - `npm run typecheck`
+  - `npm run test` (`10 files, 27 tests`)
+  - `npm audit`
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`6 tests, 379 assertions`)
+  - `git diff --check`
+
+## Open Items
+
+- Merge W5 subtask PR into `macro/w5-playwright-e2e`, then macro PR into `main`.
