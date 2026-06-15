@@ -150,7 +150,16 @@
   - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
   - `vendor/bin/phpunit` (`8 tests, 392 assertions`)
   - `git diff --check`
+- Subtask PR #12 was merged into `macro/w6-host-boot-integration`.
+- W6 macro local gates passed after subtask merge:
+  - `npm run typecheck`
+  - `npm run build`
+  - `npm run test` (`10 files, 27 tests`)
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`8 tests, 392 assertions`)
+  - `git diff --check origin/main...HEAD`
 
 ## Open Items
 
-- Merge W6 subtask PR into `macro/w6-host-boot-integration`, then macro PR into `main`.
+- Open and merge W6 macro PR into `main`.
