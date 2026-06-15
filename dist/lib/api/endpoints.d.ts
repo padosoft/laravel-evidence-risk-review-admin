@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import { EvidenceTier, Paginated, ProfileMetadata, ReviewArtifactInput, ReviewLogFilters, ReviewLogRow, ReviewResult, SubmitReviewOptions } from './types';
+import { EvidenceTier, Paginated, ProfileMetadata, ReviewArtifactInput, ReviewLogFilters, ReviewLogRow, ReviewResult, SubmitReviewOptions } from './types.js';
 export declare function evidenceRiskReviewEndpoints(client?: AxiosInstance): {
     listReviews(filters?: ReviewLogFilters): Promise<Paginated<ReviewLogRow>>;
     getReview(reviewId: string): Promise<ReviewResult>;

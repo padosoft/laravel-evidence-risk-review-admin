@@ -1,2 +1,2 @@
-export { EvidenceRiskReviewAdminApp } from './App';
-export type { EvidenceRiskReviewAdminAppProps, EvidenceRiskReviewAdminRuntimeConfig } from './config';
+export { EvidenceRiskReviewAdminApp } from './App.js';
+export type { EvidenceRiskReviewAdminAppProps, EvidenceRiskReviewAdminRuntimeConfig } from './config.js';

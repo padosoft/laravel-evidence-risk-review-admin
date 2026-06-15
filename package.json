@@ -17,7 +17,7 @@
     "./style.css": "./dist/style.css"
   },
   "scripts": {
-    "build": "vite build && vite build --config vite.lib.config.ts && tsc -p tsconfig.lib.json && node scripts/copy-library-style.mjs",
+    "build": "vite build && vite build --config vite.lib.config.ts && tsc -p tsconfig.lib.json && node scripts/fix-declaration-extensions.mjs && node scripts/copy-library-style.mjs",
     "e2e:serve": "node scripts/serve-e2e.mjs",
     "test": "vitest run",
     "test:e2e": "npm run build && playwright test",

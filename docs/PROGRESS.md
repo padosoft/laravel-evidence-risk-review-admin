@@ -258,6 +258,9 @@
 - Fixed the React peer blocker by moving `react` and `react-dom` to `peerDependencies` while keeping them in `devDependencies` for local build/test, then regenerated `package-lock.json` with npm 10.
 - Codex Connector review on commit `0ce3bab` reported one valid npm release blocker: scoped packages need explicit public publish access. Other inline comments in that pass were stale repeats of already-fixed `version`, embedded API context, and React peer dependency findings.
 - Fixed the scoped npm blocker by adding `publishConfig.access: public` and regenerating `package-lock.json` with npm 10.
+- Codex Connector review on commit `209f926` reported one valid ESM type blocker: emitted `.d.ts` files used extensionless relative imports, which fail for NodeNext consumers. Earlier inline comments in that pass were stale repeats of already-fixed npm/package export findings.
+- Fixed the ESM declaration blocker by adding `scripts/fix-declaration-extensions.mjs`, running it in `npm run build` after declaration emit, and regenerating `dist/*.d.ts` with `.js` relative specifiers.
+- Verified a temporary external consumer using `tsc --module NodeNext --moduleResolution NodeNext` can import the packed package types.
 - W8 post-fourth-Codex local gates passed:
   - `npx -p npm@10 npm ci`
   - `npm run typecheck`
@@ -265,6 +268,7 @@
   - `npm run build`
   - `npm pack --dry-run --json`
   - `npm publish --dry-run` (confirmed `public access` dry-run; login warning is expected without publishing)
+  - temporary packed-package NodeNext consumer typecheck
   - `npm audit`
   - `composer validate --strict --no-check-publish --no-interaction --no-ansi`
   - `vendor/bin/phpunit` (`10 tests, 412 assertions`)

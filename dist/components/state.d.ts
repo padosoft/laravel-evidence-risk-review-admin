@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { DataState } from '../lib/data-state';
+import { DataState } from '../lib/data-state.js';
 export declare function stateFromQuery({ isLoading, isError, isEmpty, }: {
     isLoading: boolean;
     isError: boolean;
