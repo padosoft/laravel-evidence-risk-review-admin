@@ -22,3 +22,4 @@
 - Settings tests need a deterministic localStorage polyfill because Node 25's built-in localStorage warning does not guarantee a browser-compatible API in Vitest workers.
 - Playwright `page.goto('/')` resolves to the origin root, not the configured admin basename. Standalone E2E must visit `/admin/evidence-risk-review...` so BrowserRouter basename matches.
 - If a Playwright run times out while its web server is active, port 4173 can remain occupied; on Windows `netstat -ano | findstr :4173` identifies the process to stop.
+- W6 must not hard-require the core PHP package because admin supports Laravel 11/12/13 and consumes HTTP only. Use a core-compatible HTTP fixture in Testbench for host-boot gates; keep real core package installation as host responsibility.
