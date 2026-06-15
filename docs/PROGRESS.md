@@ -138,4 +138,19 @@
 
 ## Open Items
 
-- Open and merge W5 macro PR into `main`.
+- W5 macro PR #11 was merged into `main`.
+- Started W6 Host-Boot Integration on `macro/w6-host-boot-integration` and subtask branch `task/w6-host-boot-integration`.
+- W6 objective: add a Testbench host-boot integration gate proving the admin shell and a core-compatible HTTP API can run in the same host without a hard core PHP dependency.
+- Implemented `tests/Integration/HostBootIntegrationTest.php` and added the `Integration` PHPUnit suite. The test mounts fake core-compatible HTTP routes for taxonomy/review log/submit, verifies admin shell config injection, verifies POST review then list review, and verifies the admin shell still renders when `api_base` points to an unavailable core API.
+- W6 local gates passed:
+  - `npm run typecheck`
+  - `npm run build`
+  - `npm run test` (`10 files, 27 tests`)
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`8 tests, 392 assertions`)
+  - `git diff --check`
+
+## Open Items
+
+- Merge W6 subtask PR into `macro/w6-host-boot-integration`, then macro PR into `main`.
