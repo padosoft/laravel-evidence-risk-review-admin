@@ -53,13 +53,17 @@ jobs:
           coverage: none
           tools: composer:v2
 
+      - name: Allow legacy framework compatibility cells
+        run: composer config audit.block-insecure false
+
       - name: Pin Laravel cell
         run: |
           composer require --no-update \
             illuminate/contracts:${{ matrix.illuminate }} \
             illuminate/routing:${{ matrix.illuminate }} \
             illuminate/support:${{ matrix.illuminate }} \
-            illuminate/view:${{ matrix.illuminate }} \
+            illuminate/view:${{ matrix.illuminate }}
+          composer require --dev --no-update \
             orchestra/testbench:${{ matrix.testbench }}
 
       - run: composer validate --strict --no-check-publish --no-interaction --no-ansi

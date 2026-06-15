@@ -178,6 +178,24 @@
   - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
   - `vendor/bin/phpunit` (`8 tests, 392 assertions`)
   - `git diff --check`
+- Opened W7 subtask PR #14 from `task/w7-dx-docs-ci` into `macro/w7-dx-docs-ci`.
+- Initial PR #14 CI exposed workflow issues:
+  - Frontend and Playwright failed at `npm ci` because the lock file was not synchronized for Node 22/npm 10 optional dependencies.
+  - Laravel 11 PHP matrix cells failed because Composer 2.10 blocked insecure legacy `laravel/framework` transitive versions during compatibility resolution.
+- Applied W7 CI fix:
+  - Regenerated `package-lock.json` with `npx -p npm@10 npm install --package-lock-only --ignore-scripts`.
+  - Added a CI-only `composer config audit.block-insecure false` step for legacy framework cells.
+  - Split the CI pinning commands so `orchestra/testbench` stays in `require-dev`.
+- W7 CI-fix local gates passed:
+  - `npx -p npm@10 npm ci`
+  - `npx --yes yaml-lint .github/workflows/ci.yml`
+  - `composer validate --strict --no-check-publish --no-interaction --no-ansi`
+  - `npm audit`
+  - `npm run typecheck`
+  - `npm run build`
+  - `npm run test` (`10 files, 27 tests`)
+  - `vendor/bin/phpunit` (`8 tests, 392 assertions`)
+- W7 CI-fix Playwright local status: `npm run test:e2e` timed out three times on this workstation and left a Node server on port 4173; stale processes were killed and the approved local exemption is applied. Online Playwright CI remains mandatory before merge.
 
 ## Open Items
 
