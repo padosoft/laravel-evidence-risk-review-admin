@@ -254,7 +254,10 @@
   - `vendor/bin/pint --test`
 - Codex Connector reviewed commit `9971ba5` and reported one remaining embedded-config gap: `SettingsPage` connection probe still called the module-level default taxonomy endpoint.
 - Fixed the fourth Codex pass by exporting the configured endpoint context accessor, routing `SettingsPage` probe through it, and adding a Vitest case that renders `SettingsPage` with `ApiEndpointsProvider` and verifies `/custom/api/taxonomy`.
+- Codex Connector review on commit `e04dab3` also reported a valid embedded-package blocker: React and ReactDOM were externalized by the library build but still published as regular dependencies. Two other comments in that pass were stale/incorrect because `package.json` already had `version: 1.0.0` and embedded API config was already context-wired.
+- Fixed the React peer blocker by moving `react` and `react-dom` to `peerDependencies` while keeping them in `devDependencies` for local build/test, then regenerated `package-lock.json` with npm 10.
 - W8 post-fourth-Codex local gates passed:
+  - `npx -p npm@10 npm ci`
   - `npm run typecheck`
   - `npm run test` (`10 files, 31 tests`)
   - `npm run build`
@@ -268,4 +271,4 @@
 
 ## Open Items
 
-- Commit and push fourth Codex fixes, rerun CI and final Codex review on the new commit, then merge, tag `v1.0.0`, and publish GitHub Release.
+- Commit and push React peer dependency fix, rerun CI and final Codex review on the new commit, then merge, tag `v1.0.0`, and publish GitHub Release.
