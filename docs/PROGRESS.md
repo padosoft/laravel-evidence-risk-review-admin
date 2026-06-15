@@ -252,7 +252,20 @@
   - `vendor/bin/phpunit` (`10 tests, 412 assertions`)
   - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
   - `vendor/bin/pint --test`
+- Codex Connector reviewed commit `9971ba5` and reported one remaining embedded-config gap: `SettingsPage` connection probe still called the module-level default taxonomy endpoint.
+- Fixed the fourth Codex pass by exporting the configured endpoint context accessor, routing `SettingsPage` probe through it, and adding a Vitest case that renders `SettingsPage` with `ApiEndpointsProvider` and verifies `/custom/api/taxonomy`.
+- W8 post-fourth-Codex local gates passed:
+  - `npm run typecheck`
+  - `npm run test` (`10 files, 31 tests`)
+  - `npm run build`
+  - `npm pack --dry-run --json`
+  - `npm audit`
+  - `composer validate --strict --no-check-publish --no-interaction --no-ansi`
+  - `vendor/bin/phpunit` (`10 tests, 412 assertions`)
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/pint --test`
+  - `git diff --check`
 
 ## Open Items
 
-- Commit and push third Codex fixes, rerun CI and final Codex review on the new commit, then merge, tag `v1.0.0`, and publish GitHub Release.
+- Commit and push fourth Codex fixes, rerun CI and final Codex review on the new commit, then merge, tag `v1.0.0`, and publish GitHub Release.

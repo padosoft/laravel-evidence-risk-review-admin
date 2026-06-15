@@ -24,12 +24,12 @@ export function ApiEndpointsProvider({
   return createElement(ApiEndpointsContext.Provider, { value: configuredEndpoints }, children);
 }
 
-function useApiEndpoints() {
+export function useEvidenceRiskReviewEndpoints() {
   return useContext(ApiEndpointsContext);
 }
 
 export function useReviews(filters: ReviewLogFilters = {}) {
-  const api = useApiEndpoints();
+  const api = useEvidenceRiskReviewEndpoints();
 
   return useQuery({
     queryKey: queryKeys.reviews(filters),
@@ -38,7 +38,7 @@ export function useReviews(filters: ReviewLogFilters = {}) {
 }
 
 export function useReview(reviewId: string) {
-  const api = useApiEndpoints();
+  const api = useEvidenceRiskReviewEndpoints();
 
   return useQuery({
     queryKey: queryKeys.review(reviewId),
@@ -48,7 +48,7 @@ export function useReview(reviewId: string) {
 }
 
 export function useProfiles() {
-  const api = useApiEndpoints();
+  const api = useEvidenceRiskReviewEndpoints();
 
   return useQuery({
     queryKey: queryKeys.profiles(),
@@ -57,7 +57,7 @@ export function useProfiles() {
 }
 
 export function useProfile(key: string) {
-  const api = useApiEndpoints();
+  const api = useEvidenceRiskReviewEndpoints();
 
   return useQuery({
     queryKey: queryKeys.profile(key),
@@ -67,7 +67,7 @@ export function useProfile(key: string) {
 }
 
 export function useTaxonomy() {
-  const api = useApiEndpoints();
+  const api = useEvidenceRiskReviewEndpoints();
 
   return useQuery({
     queryKey: queryKeys.taxonomy(),
@@ -76,7 +76,7 @@ export function useTaxonomy() {
 }
 
 export function useSubmitReview() {
-  const api = useApiEndpoints();
+  const api = useEvidenceRiskReviewEndpoints();
 
   return useMutation({
     mutationFn: ({ input, options = {} }: { input: ReviewArtifactInput; options?: SubmitReviewOptions }) =>

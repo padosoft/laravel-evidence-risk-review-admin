@@ -37,3 +37,4 @@
 - NPM export readiness needs `package.json` `version`, JSX runtime externals (`react/jsx-runtime`, `react/jsx-dev-runtime`), and declarations that do not side-effect import missing CSS paths. Keep CSS as an explicit `./style.css` export.
 - Embedded mode API calls must not use a module-level singleton client when the React app accepts `config` props. Provide configured endpoints through React context so host-supplied `api_base` affects every query/mutation.
 - Library CSS should be copied from the processed Vite manifest output, not raw `resources/css`, so embedded consumers get the same CSS as the Laravel auto-mount bundle without running Tailwind on dependency files.
+- Settings and other one-off action handlers are part of the embedded API contract too. They must use the same configured endpoint context as query hooks; tests for those paths should render the page with `ApiEndpointsProvider` because embedded mode intentionally suppresses the shell navigation.

@@ -56,13 +56,13 @@ function D({ verdict: e }) {
 		children: E[e]
 	});
 }
-function O({ cost: e }) {
+function te({ cost: e }) {
 	return /* @__PURE__ */ _("span", {
 		className: "evr-badge evr-badge--muted",
 		children: e.replaceAll("_", " ")
 	});
 }
-function k({ tier: e }) {
+function O({ tier: e }) {
 	return /* @__PURE__ */ v("span", {
 		className: "evr-tier-badge",
 		children: [/* @__PURE__ */ _("span", { children: e.label }), /* @__PURE__ */ _("strong", { children: e.rank })]
@@ -70,42 +70,42 @@ function k({ tier: e }) {
 }
 //#endregion
 //#region resources/js/lib/api/errors.ts
-var A = class extends Error {
+var k = class extends Error {
 	status;
 	code;
 	payload;
 	constructor(e, t, n, r) {
 		super(e), this.status = t, this.code = n, this.payload = r, this.name = "ApiError";
 	}
-}, j = class extends A {
+}, A = class extends k {
 	constructor(e, t, n, r) {
 		super(n, e, t, r), this.name = "ValidationError";
 	}
 	get fieldErrors() {
 		return this.payload?.errors ?? {};
 	}
-}, M = class extends A {
+}, j = class extends k {
 	constructor(e, t, n) {
 		super(t, e, "feature_disabled", n), this.name = "FeatureDisabledError";
 	}
-}, te = class extends A {
+}, ne = class extends k {
 	constructor(e, t, n) {
 		super(t, e, "auth_expired", n), this.name = "AuthExpiredError";
 	}
-}, N = class extends A {
+}, M = class extends k {
 	constructor(e = "Network error") {
 		super(e, null, "network_error"), this.name = "NetworkError";
 	}
 };
-function P(e) {
-	if (!y.isAxiosError(e)) return new A(e instanceof Error ? e.message : "Unexpected error", null, "unexpected_error");
-	if (!e.response) return new N(e.message);
+function N(e) {
+	if (!y.isAxiosError(e)) return new k(e instanceof Error ? e.message : "Unexpected error", null, "unexpected_error");
+	if (!e.response) return new M(e.message);
 	let t = e.response.status, n = e.response.data ?? {}, r = n.error?.message ?? n.message ?? e.message, i = n.error?.code ?? `http_${t}`;
-	return t === 422 ? new j(t, i, r, n) : t === 401 || t === 419 ? new te(t, r, n) : t === 404 || i === "feature_disabled" ? new M(t, r, n) : new A(r, t, i, n);
+	return t === 422 ? new A(t, i, r, n) : t === 401 || t === 419 ? new ne(t, r, n) : t === 404 || i === "feature_disabled" ? new j(t, r, n) : new k(r, t, i, n);
 }
 //#endregion
 //#region resources/js/lib/data-state.tsx
-function ne({ state: e, testId: t, children: n }) {
+function P({ state: e, testId: t, children: n }) {
 	return /* @__PURE__ */ _("section", {
 		"data-testid": t,
 		"data-state": e,
@@ -119,7 +119,7 @@ function F({ isLoading: e, isError: t, isEmpty: n }) {
 	return e ? "loading" : t ? "error" : n ? "empty" : "ready";
 }
 function I({ testId: e, state: t, error: n, empty: r, children: i }) {
-	return /* @__PURE__ */ v(ne, {
+	return /* @__PURE__ */ v(P, {
 		testId: e,
 		state: t,
 		children: [
@@ -130,7 +130,7 @@ function I({ testId: e, state: t, error: n, empty: r, children: i }) {
 			t === "error" ? /* @__PURE__ */ _("div", {
 				className: "evr-callout evr-callout--error",
 				"data-testid": `${e}-error`,
-				children: n instanceof A ? n.message : "Unable to load Evidence Risk Review data."
+				children: n instanceof k ? n.message : "Unable to load Evidence Risk Review data."
 			}) : null,
 			t === "empty" ? /* @__PURE__ */ _("div", {
 				className: "evr-empty",
@@ -143,30 +143,30 @@ function I({ testId: e, state: t, error: n, empty: r, children: i }) {
 }
 //#endregion
 //#region resources/js/lib/api/client.ts
-function re(e) {
+function L(e) {
 	return C(x(e).api_base);
 }
-function L(e) {
+function R(e) {
 	let t = y.create({
-		baseURL: re(e),
+		baseURL: L(e),
 		withCredentials: !0,
 		headers: {
 			Accept: "application/json",
 			"X-Requested-With": "XMLHttpRequest"
 		}
 	});
-	return t.interceptors.response.use((e) => e, (e) => Promise.reject(P(e))), t;
+	return t.interceptors.response.use((e) => e, (e) => Promise.reject(N(e))), t;
 }
-L();
+R();
 //#endregion
 //#region resources/js/lib/api/endpoints.ts
-function R(e) {
+function z(e) {
 	return Object.fromEntries(Object.entries(e).filter(([, e]) => e != null && e !== ""));
 }
-function z(e = L()) {
+function B(e = R()) {
 	return {
 		async listReviews(t = {}) {
-			return (await e.get("/reviews", { params: R(t) })).data;
+			return (await e.get("/reviews", { params: z(t) })).data;
 		},
 		async getReview(t) {
 			return (await e.get(`/reviews/${encodeURIComponent(t)}`)).data;
@@ -185,7 +185,7 @@ function z(e = L()) {
 		}
 	};
 }
-var B = z(), V = {
+var re = B(), V = {
 	reviews: (e = {}) => [
 		"evr",
 		"reviews",
@@ -203,9 +203,9 @@ var B = z(), V = {
 		e
 	],
 	taxonomy: () => ["evr", "taxonomy"]
-}, H = i(B);
+}, H = i(re);
 function U({ children: e, config: t }) {
-	let n = s(() => z(L(t)), [t.api_base]);
+	let n = s(() => B(R(t)), [t.api_base]);
 	return a(H.Provider, { value: n }, e);
 }
 function W() {
@@ -326,7 +326,7 @@ function ae() {
 						"data-testid": "evr-dashboard-tier-dist",
 						children: [/* @__PURE__ */ _("h2", { children: "Evidence tiers" }), /* @__PURE__ */ _("div", {
 							className: "evr-tier-list",
-							children: [...n.data ?? []].sort((e, t) => t.rank - e.rank).map((e) => /* @__PURE__ */ _(k, { tier: e }, e.key))
+							children: [...n.data ?? []].sort((e, t) => t.rank - e.rank).map((e) => /* @__PURE__ */ _(O, { tier: e }, e.key))
 						})]
 					})]
 				}),
@@ -428,7 +428,7 @@ function se() {
 //#endregion
 //#region resources/js/pages/ReviewDetailPage.tsx
 function ce() {
-	let { reviewId: e = "" } = g(), t = K(e), n = t.error instanceof A && t.error.status === 404, r = F({
+	let { reviewId: e = "" } = g(), t = K(e), n = t.error instanceof k && t.error.status === 404, r = F({
 		isLoading: t.isLoading,
 		isError: t.isError && !n
 	});
@@ -495,7 +495,7 @@ function ce() {
 								/* @__PURE__ */ v("div", { children: [
 									/* @__PURE__ */ _("strong", { children: e.check_kind }),
 									/* @__PURE__ */ _(D, { verdict: e.verdict }),
-									/* @__PURE__ */ _(O, { cost: e.cost_class })
+									/* @__PURE__ */ _(te, { cost: e.cost_class })
 								] }),
 								/* @__PURE__ */ _("p", { children: e.reason }),
 								e.suggested_rewrite ? /* @__PURE__ */ _("blockquote", { children: e.suggested_rewrite }) : null
@@ -509,7 +509,7 @@ function ce() {
 						className: "evr-tier-list",
 						children: Object.entries(t.data.source_tiers).map(([e, t]) => /* @__PURE__ */ v("div", {
 							"data-testid": `evr-review-detail-source-${e}`,
-							children: [/* @__PURE__ */ _("span", { children: e }), /* @__PURE__ */ _(k, { tier: t })]
+							children: [/* @__PURE__ */ _("span", { children: e }), /* @__PURE__ */ _(O, { tier: t })]
 						}, e))
 					})]
 				})
@@ -625,18 +625,18 @@ function le() {
 //#endregion
 //#region resources/js/pages/SettingsPage.tsx
 function ue() {
-	let e = x(), [t, n] = c(() => document.documentElement.getAttribute("data-theme") || e.theme_default || "dark"), [r, i] = c("idle"), [a, o] = c("");
-	function s() {
-		let e = t === "dark" ? "light" : "dark";
-		n(e), document.documentElement.setAttribute("data-theme", e), typeof window.localStorage?.setItem == "function" && window.localStorage.setItem("evr-theme", e);
+	let e = x(), t = W(), [n, r] = c(() => document.documentElement.getAttribute("data-theme") || e.theme_default || "dark"), [i, a] = c("idle"), [o, s] = c("");
+	function l() {
+		let e = n === "dark" ? "light" : "dark";
+		r(e), document.documentElement.setAttribute("data-theme", e), typeof window.localStorage?.setItem == "function" && window.localStorage.setItem("evr-theme", e);
 	}
-	async function l() {
-		i("loading"), o("");
+	async function u() {
+		a("loading"), s("");
 		try {
-			let e = await B.taxonomy();
-			i("ready"), o(`${e.length} tiers reachable`);
+			let e = await t.taxonomy();
+			a("ready"), s(`${e.length} tiers reachable`);
 		} catch (e) {
-			i("error"), o(e instanceof Error ? e.message : "Connection failed");
+			a("error"), s(e instanceof Error ? e.message : "Connection failed");
 		}
 	}
 	return /* @__PURE__ */ v("section", {
@@ -651,8 +651,8 @@ function ue() {
 					className: "evr-button",
 					type: "button",
 					"data-testid": "evr-settings-theme",
-					onClick: s,
-					children: [t === "dark" ? "Light" : "Dark", " theme"]
+					onClick: l,
+					children: [n === "dark" ? "Light" : "Dark", " theme"]
 				})]
 			}),
 			/* @__PURE__ */ v("section", {
@@ -673,14 +673,14 @@ function ue() {
 			/* @__PURE__ */ _("section", {
 				className: "evr-panel",
 				"data-testid": "evr-settings-probe",
-				"data-state": r,
-				"aria-busy": r === "loading",
+				"data-state": i,
+				"aria-busy": i === "loading",
 				children: /* @__PURE__ */ v("div", {
 					className: "evr-page__header",
-					children: [/* @__PURE__ */ v("div", { children: [/* @__PURE__ */ _("h2", { children: "Connection probe" }), /* @__PURE__ */ _("p", { children: a || "Calls the taxonomy endpoint on the configured core API." })] }), /* @__PURE__ */ _("button", {
+					children: [/* @__PURE__ */ v("div", { children: [/* @__PURE__ */ _("h2", { children: "Connection probe" }), /* @__PURE__ */ _("p", { children: o || "Calls the taxonomy endpoint on the configured core API." })] }), /* @__PURE__ */ _("button", {
 						className: "evr-button evr-button--ghost",
 						type: "button",
-						onClick: l,
+						onClick: u,
 						children: "Test connection"
 					})]
 				})
@@ -716,7 +716,7 @@ function de() {
 				] }) }), /* @__PURE__ */ _("tbody", { children: t.map((e) => /* @__PURE__ */ v("tr", {
 					"data-testid": `evr-taxonomy-row-${e.key}`,
 					children: [
-						/* @__PURE__ */ _("td", { children: /* @__PURE__ */ _(k, { tier: e }) }),
+						/* @__PURE__ */ _("td", { children: /* @__PURE__ */ _(O, { tier: e }) }),
 						/* @__PURE__ */ _("td", { children: e.rank }),
 						/* @__PURE__ */ _("td", { children: e.builtin ? "Built in" : "Custom" })
 					]
@@ -745,7 +745,7 @@ function $(e) {
 	};
 }
 function fe() {
-	let e = q(), t = ie(), [n, r] = c("What does the evidence support?"), [i, a] = c(""), [o, s] = c("clinical"), [l, d] = c(!0), [f, p] = c(!1), [m, h] = c([Q(0)]), [g, y] = c([$(0)]), b = t.error instanceof j ? t.error : null, x = t.error instanceof A ? t.error : null;
+	let e = q(), t = ie(), [n, r] = c("What does the evidence support?"), [i, a] = c(""), [o, s] = c("clinical"), [l, d] = c(!0), [f, p] = c(!1), [m, h] = c([Q(0)]), [g, y] = c([$(0)]), b = t.error instanceof A ? t.error : null, x = t.error instanceof k ? t.error : null;
 	function S(e, t) {
 		h((n) => n.map((n, r) => r === e ? {
 			...n,
