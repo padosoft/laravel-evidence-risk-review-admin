@@ -39,3 +39,7 @@ Non-negotiables:
 - Middleware never empty.
 - UI tasks need Vitest and Playwright.
 - Per-W AI reviews are temporarily disabled; run one deep AI review before final release.
+- After W7, every PR must pass GitHub Actions CI before merge.
+- Verify npm lock with `npx -p npm@10 npm ci` when dependencies change.
+- Commit built release assets under `public/vendor/evidence-risk-review-admin`.
+- Keep Composer legacy-advisory bypasses CI-only; do not commit them to `composer.json`.

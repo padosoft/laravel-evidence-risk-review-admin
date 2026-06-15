@@ -12,7 +12,7 @@ export default defineConfig({
   },
   reporter: [['list'], ['html', { open: 'never' }]],
   webServer: {
-    command: 'npm run build && npm run e2e:serve',
+    command: 'node scripts/serve-e2e.mjs',
     url: 'http://127.0.0.1:4173/admin/evidence-risk-review',
     reuseExistingServer: false,
     timeout: 120_000,

@@ -204,4 +204,81 @@
 
 ## Open Items
 
-- Open W7 macro PR into `main`; merge only after mandatory CI is green.
+- W7 macro PR #15 passed mandatory CI and was merged into `main`.
+- Started W8 Hardening Release on `macro/w8-hardening-release` and subtask branch `task/w8-hardening-release`.
+- W8 objective: final hardening, commit built release assets, refresh durable rules/skills from lessons, run final deep AI review, merge through CI, tag `v1.0.0`, and publish GitHub Release.
+- Implemented W8 hardening:
+  - Normalized runtime `api_base`, `mount_prefix`, `asset_path`, and `theme_default` in PHP and TypeScript.
+  - Added PHPUnit/Vitest coverage for whitespace-wrapped runtime config and invalid theme fallback.
+  - Fixed Codex P2 feedback by preserving root `EVR_ADMIN_PREFIX=/` as runtime `mount_prefix: ''` and adding root-mount PHPUnit/Vitest coverage.
+  - Changed release packaging so `public/vendor/evidence-risk-review-admin` is no longer ignored.
+  - Built the release bundle under `public/vendor/evidence-risk-review-admin`.
+  - Fixed Codex P1 feedback by adding a real embedded package export with library build output under `dist/`.
+  - Updated `CHANGELOG.md` for `1.0.0 - 2026-06-15`.
+  - Refreshed `AGENTS.md`, `CLAUDE.md`, `docs/RULES.md`, and repo/Claude skills with W7/W8 CI/release lessons.
+- W8 local gates passed so far:
+  - `npx -p npm@10 npm ci`
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`10 tests, 412 assertions`)
+  - `npm audit`
+  - `npm run typecheck`
+  - `npm run test` (`10 files, 29 tests`)
+  - `npm run build`
+  - `git diff --check`
+- W8 local blockers:
+  - `composer validate --strict --no-check-publish --no-interaction --no-ansi` timed out three times on this workstation; applying the known local Composer timeout exemption and requiring CI Composer validate before merge.
+  - `npm run test:e2e` still timed out locally after the Playwright script simplification; no port 4173 listener remained. Online Playwright CI remains mandatory before merge.
+- Final local Copilot deep review attempt was blocked by plan usage limit: `additional_spend_limit_reached`. Per fallback rules, switch to ChatGPT Codex Connector on the W8 PR and verify it responds on the current commit.
+- Codex Connector reviewed commit `b0288e06ec` and reported two actionable findings:
+  - P1: README advertised embedded imports but the release only shipped an auto-mount bundle.
+  - P2: root `EVR_ADMIN_PREFIX=/` was normalized back to the default admin prefix in runtime config.
+- Fixed Codex findings by adding `resources/js/index.ts`, `vite.lib.config.ts`, `tsconfig.lib.json`, package `exports`, `dist/` build output, embedded README style import, root mount preservation, and PHP/Vitest root-mount coverage.
+- Codex Connector reviewed commit `bc59913eb0` and reported three additional NPM export blockers:
+  - Missing `package.json` `version`.
+  - Library build did not externalize `react/jsx-runtime` / `react/jsx-dev-runtime`.
+  - Generated `dist/index.d.ts` imported a non-existent `../css/panel.css` path.
+- Fixed the second Codex pass by adding package version `1.0.0`, externalizing JSX runtime modules, removing the side-effect CSS import from the library entry, copying `resources/css/panel.css` to `dist/style.css`, and verifying `npm pack --dry-run --json`.
+- Codex Connector reviewed commit `39bd6f7dc6` and reported:
+  - A stale/incorrect package version warning; `package.json` already contains `version: 1.0.0` and `npm pack --dry-run --json` passes.
+  - P1: embedded config did not reach API calls because hooks used a module-level singleton endpoints client.
+  - P1: `dist/style.css` copied raw source CSS instead of processed Vite/PostCSS output.
+- Fixed the third Codex pass by adding an `ApiEndpointsProvider` context wired from resolved runtime config, adding Vitest coverage that embedded `config.api_base` reaches `/custom/api/reviews`, and copying library CSS from the Vite manifest output.
+- W8 post-Codex local gates passed:
+  - `npm run build`
+  - `npm pack --dry-run --json`
+  - `npm run typecheck`
+  - `npm run test` (`10 files, 30 tests`)
+  - `vendor/bin/phpunit` (`10 tests, 412 assertions`)
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/pint --test`
+- Codex Connector reviewed commit `9971ba5` and reported one remaining embedded-config gap: `SettingsPage` connection probe still called the module-level default taxonomy endpoint.
+- Fixed the fourth Codex pass by exporting the configured endpoint context accessor, routing `SettingsPage` probe through it, and adding a Vitest case that renders `SettingsPage` with `ApiEndpointsProvider` and verifies `/custom/api/taxonomy`.
+- Codex Connector review on commit `e04dab3` also reported a valid embedded-package blocker: React and ReactDOM were externalized by the library build but still published as regular dependencies. Two other comments in that pass were stale/incorrect because `package.json` already had `version: 1.0.0` and embedded API config was already context-wired.
+- Fixed the React peer blocker by moving `react` and `react-dom` to `peerDependencies` while keeping them in `devDependencies` for local build/test, then regenerated `package-lock.json` with npm 10.
+- Codex Connector review on commit `0ce3bab` reported one valid npm release blocker: scoped packages need explicit public publish access. Other inline comments in that pass were stale repeats of already-fixed `version`, embedded API context, and React peer dependency findings.
+- Fixed the scoped npm blocker by adding `publishConfig.access: public` and regenerating `package-lock.json` with npm 10.
+- Codex Connector review on commit `209f926` reported one valid ESM type blocker: emitted `.d.ts` files used extensionless relative imports, which fail for NodeNext consumers. Earlier inline comments in that pass were stale repeats of already-fixed npm/package export findings.
+- Fixed the ESM declaration blocker by adding `scripts/fix-declaration-extensions.mjs`, running it in `npm run build` after declaration emit, and regenerating `dist/*.d.ts` with `.js` relative specifiers.
+- Verified a temporary external consumer using `tsc --module NodeNext --moduleResolution NodeNext` can import the packed package types.
+- Codex Connector review on commit `939c934` reported one valid CSS subpath blocker: the documented `@padosoft/laravel-evidence-risk-review-admin/style.css` import had no TypeScript declaration for strict consumers. Earlier inline comments in that pass were stale repeats of already-fixed npm/package export findings.
+- Fixed the CSS subpath blocker by adding `exports["./style.css"].types`, generating `dist/style.css.d.ts` from the CSS copy script, and verifying a temporary NodeNext consumer can import both the component and CSS subpath.
+- W8 post-fourth-Codex local gates passed:
+  - `npx -p npm@10 npm ci`
+  - `npm run typecheck`
+  - `npm run test` (`10 files, 31 tests`)
+  - `npm run build`
+  - `npm pack --dry-run --json`
+  - `npm publish --dry-run` (confirmed `public access` dry-run; login warning is expected without publishing)
+  - temporary packed-package NodeNext consumer typecheck
+  - temporary packed-package NodeNext consumer typecheck with `style.css` subpath import
+  - `npm audit`
+  - `composer validate --strict --no-check-publish --no-interaction --no-ansi`
+  - `vendor/bin/phpunit` (`10 tests, 412 assertions`)
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/pint --test`
+  - `git diff --check`
+
+## Open Items
+
+- Commit and push React peer dependency fix, rerun CI and final Codex review on the new commit, then merge, tag `v1.0.0`, and publish GitHub Release.

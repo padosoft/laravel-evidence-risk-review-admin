@@ -49,6 +49,13 @@ If those files are unavailable, continue from `docs/IMPLEMENTATION_PLAN.md` and 
 
 CI note: before W7, the remote CI gate means no required checks are failing or pending. W7 introduces GitHub Actions; after that, every PR must wait for configured CI to pass.
 
+Release/CI lessons:
+
+- Verify npm lock files with `npx -p npm@10 npm ci` because GitHub uses Node 22/npm 10.
+- Keep Composer `audit.block-insecure=false` scoped to CI legacy Laravel compatibility cells only.
+- Commit built release assets under `public/vendor/evidence-risk-review-admin` for v1.0.0.
+- If local Playwright hangs three times, record the exemption and require online Playwright CI before merge.
+
 ## Guardrails
 
 - No AskMyDocs references or dependencies.
