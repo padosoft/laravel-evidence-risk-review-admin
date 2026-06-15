@@ -162,4 +162,23 @@
 
 ## Open Items
 
-- Open and merge W6 macro PR into `main`.
+- W6 macro PR #13 was merged into `main`.
+- Started W7 DX Docs CI on `macro/w7-dx-docs-ci` and subtask branch `task/w7-dx-docs-ci`.
+- W7 objective: produce README, env/governance docs, CODEOWNERS, GitHub Actions CI matrix, and commit provided screenshots.
+- Implemented README with screenshots, quick start, configuration, API contract, testing, security and AI agent pack sections.
+- Added `.env.example`, `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, `.github/CODEOWNERS`, and `.github/workflows/ci.yml`.
+- W7 local gates passed:
+  - `npx --yes yaml-lint .github/workflows/ci.yml`
+  - `npm run typecheck`
+  - `npm run build`
+  - `npm run test` (`10 files, 27 tests`)
+  - `npm audit`
+  - `npm run test:e2e` (`6 passed`)
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`8 tests, 392 assertions`)
+  - `git diff --check`
+
+## Open Items
+
+- Merge W7 subtask PR into `macro/w7-dx-docs-ci`, then macro PR into `main`; after W7, CI checks are mandatory for every PR.

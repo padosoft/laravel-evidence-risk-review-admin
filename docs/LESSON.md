@@ -23,3 +23,5 @@
 - Playwright `page.goto('/')` resolves to the origin root, not the configured admin basename. Standalone E2E must visit `/admin/evidence-risk-review...` so BrowserRouter basename matches.
 - If a Playwright run times out while its web server is active, port 4173 can remain occupied; on Windows `netstat -ano | findstr :4173` identifies the process to stop.
 - W6 must not hard-require the core PHP package because admin supports Laravel 11/12/13 and consumes HTTP only. Use a core-compatible HTTP fixture in Testbench for host-boot gates; keep real core package installation as host responsibility.
+- W7 CI pins Illuminate/Testbench per matrix cell with `composer require --no-update ...` before `composer update`; this keeps the admin package Laravel 11/12/13-compatible while local development may resolve Laravel 13 by default.
+- Use `composer validate --strict --no-check-publish` in CI because full publish validation can hang on this workstation and is not needed for every matrix cell.
