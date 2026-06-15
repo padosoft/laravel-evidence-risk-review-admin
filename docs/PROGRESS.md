@@ -227,7 +227,8 @@
 - W8 local blockers:
   - `composer validate --strict --no-check-publish --no-interaction --no-ansi` timed out three times on this workstation; applying the known local Composer timeout exemption and requiring CI Composer validate before merge.
   - `npm run test:e2e` still timed out locally after the Playwright script simplification; no port 4173 listener remained. Online Playwright CI remains mandatory before merge.
+- Final local Copilot deep review attempt was blocked by plan usage limit: `additional_spend_limit_reached`. Per fallback rules, switch to ChatGPT Codex Connector on the W8 PR and verify it responds on the current commit.
 
 ## Open Items
 
-- Finish W8 local diff checks, final deep AI review, PR/CI/merge, tag `v1.0.0`, and publish GitHub Release.
+- Push W8, open PR, trigger Codex Connector final deep review, wait for CI/review, merge, tag `v1.0.0`, and publish GitHub Release.
