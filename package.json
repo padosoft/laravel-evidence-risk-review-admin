@@ -14,7 +14,10 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": {
+      "types": "./dist/style.css.d.ts",
+      "default": "./dist/style.css"
+    }
   },
   "scripts": {
     "build": "vite build && vite build --config vite.lib.config.ts && tsc -p tsconfig.lib.json && node scripts/fix-declaration-extensions.mjs && node scripts/copy-library-style.mjs",

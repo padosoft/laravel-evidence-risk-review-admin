@@ -1,9 +1,10 @@
-import { copyFileSync, mkdirSync, readFileSync } from 'node:fs';
+import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const target = join(root, 'dist', 'style.css');
+const typesTarget = join(root, 'dist', 'style.css.d.ts');
 const manifest = JSON.parse(
   readFileSync(join(root, 'public', 'vendor', 'evidence-risk-review-admin', '.vite', 'manifest.json'), 'utf8'),
 );
@@ -15,3 +16,4 @@ if (!cssFile) {
 
 mkdirSync(dirname(target), { recursive: true });
 copyFileSync(join(root, 'public', 'vendor', 'evidence-risk-review-admin', cssFile), target);
+writeFileSync(typesTarget, 'declare const stylesheet: string;\nexport default stylesheet;\n');

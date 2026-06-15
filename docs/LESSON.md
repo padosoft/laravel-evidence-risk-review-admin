@@ -41,3 +41,4 @@
 - Embedded React package exports that externalize `react` and `react-dom` must publish them as `peerDependencies` and keep them in `devDependencies` for local builds. Leaving them only in `dependencies` risks nested React installs and invalid hook calls in host apps.
 - Scoped npm packages need explicit public publish intent. Add `publishConfig.access: public` before the first release so `npm publish` cannot default to private scoped-package behavior.
 - ESM packages with `type: module` should publish declaration files whose relative imports include `.js` extensions. Verify embedded npm exports with a temporary `moduleResolution: NodeNext` consumer before release.
+- If README documents a CSS subpath import, publish a matching subpath `types` condition and a tiny `*.css.d.ts`; otherwise strict TypeScript consumers can fail even when the JS entrypoint types are valid.
