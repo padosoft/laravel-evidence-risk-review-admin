@@ -51,6 +51,10 @@ If context is missing, read these files first:
 - Ensure `phpunit.xml`, Vitest, and Playwright configs include every test family introduced by the work.
 - If Composer appears stuck, retry with `--no-interaction --no-ansi`. If even `composer --version` times out, record the blocker separately from code validation and retry on the next subtask.
 - After W7 introduces CI, remote CI is mandatory for every PR and must pass before merge.
+- Verify npm lock compatibility with GitHub's Node 22/npm 10 baseline using `npx -p npm@10 npm ci` when package dependencies or lock files change.
+- Keep release assets under `public/vendor/evidence-risk-review-admin` committed for v1.0.0 packages; hosts can publish them with the package asset tag.
+- Composer 2.10 can block legacy Laravel 11 matrix cells on known framework advisories. Disable `audit.block-insecure` only inside compatibility CI cells; do not commit that setting to the package `composer.json`.
+- If local Playwright hangs repeatedly on this workstation after three attempts, record the local exemption, clean port 4173 if needed, and require online Playwright CI before merge.
 
 ## Branch And PR Loop
 
@@ -123,4 +127,4 @@ Verify `chatgpt-codex-connector[bot]` appears in PR reviews/comments/reactions. 
 
 ## Current Priority
 
-Finish Bootstrap on `task/bootstrap-agent-rules`, merge it to `main`, then start `macro/w1-package-skeleton`.
+Finish W8 hardening/release on `macro/w8-hardening-release`, run the final deep AI review, merge through CI, tag `v1.0.0`, and publish the GitHub Release.

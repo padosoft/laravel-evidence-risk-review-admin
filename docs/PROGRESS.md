@@ -204,4 +204,30 @@
 
 ## Open Items
 
-- Open W7 macro PR into `main`; merge only after mandatory CI is green.
+- W7 macro PR #15 passed mandatory CI and was merged into `main`.
+- Started W8 Hardening Release on `macro/w8-hardening-release` and subtask branch `task/w8-hardening-release`.
+- W8 objective: final hardening, commit built release assets, refresh durable rules/skills from lessons, run final deep AI review, merge through CI, tag `v1.0.0`, and publish GitHub Release.
+- Implemented W8 hardening:
+  - Normalized runtime `api_base`, `mount_prefix`, `asset_path`, and `theme_default` in PHP and TypeScript.
+  - Added PHPUnit/Vitest coverage for whitespace-wrapped runtime config and invalid theme fallback.
+  - Changed release packaging so `public/vendor/evidence-risk-review-admin` is no longer ignored.
+  - Built the release bundle under `public/vendor/evidence-risk-review-admin`.
+  - Updated `CHANGELOG.md` for `1.0.0 - 2026-06-15`.
+  - Refreshed `AGENTS.md`, `CLAUDE.md`, `docs/RULES.md`, and repo/Claude skills with W7/W8 CI/release lessons.
+- W8 local gates passed so far:
+  - `npx -p npm@10 npm ci`
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`9 tests, 398 assertions`)
+  - `npm audit`
+  - `npm run typecheck`
+  - `npm run test` (`10 files, 28 tests`)
+  - `npm run build`
+  - `git diff --check`
+- W8 local blockers:
+  - `composer validate --strict --no-check-publish --no-interaction --no-ansi` timed out three times on this workstation; applying the known local Composer timeout exemption and requiring CI Composer validate before merge.
+  - `npm run test:e2e` still timed out locally after the Playwright script simplification; no port 4173 listener remained. Online Playwright CI remains mandatory before merge.
+
+## Open Items
+
+- Finish W8 local diff checks, final deep AI review, PR/CI/merge, tag `v1.0.0`, and publish GitHub Release.

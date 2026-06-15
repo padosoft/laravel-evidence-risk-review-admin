@@ -80,6 +80,9 @@ npm run test:e2e
 - UI/UX tasks require Vitest/Vite and Playwright scenarios for every meaningful interaction.
 - When adding a new test family, add it to the correct config; do not accept a green run that skipped the new directory.
 - GitHub Actions workflow changes require local YAML sanity check such as `npx --yes yaml-lint .github/workflows/ci.yml`.
+- When frontend dependencies or lock files change, verify the lock with GitHub's baseline: `npx -p npm@10 npm ci`.
+- Composer 2.10 legacy Laravel matrix cells may require `composer config audit.block-insecure false` in CI only; never commit this setting to the package `composer.json`.
+- If local Playwright hangs three times on this workstation, record the exemption, kill any port 4173 listener, and rely on mandatory GitHub Actions Playwright before merge.
 - If a tool is unavailable, record the exact blocker in `docs/PROGRESS.md`.
 
 ## Review Rules
@@ -102,3 +105,4 @@ npm run test:e2e
 - Tag final package as `v1.0.0`.
 - Publish a GitHub Release after final validation.
 - Packagist readiness happens only after v1.0.0 is feature-complete, documented, and built.
+- Commit the release bundle under `public/vendor/evidence-risk-review-admin` so installing hosts can publish assets without running the package frontend toolchain.

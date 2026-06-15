@@ -24,6 +24,8 @@ This file mirrors durable rules for Claude Code and other Claude-compatible agen
 - Keep `docs/PROGRESS.md` and `docs/LESSON.md` current.
 - Follow the branch/PR/CI loop in `AGENTS.md`.
 - Preserve the supplied admin prototype's information architecture, screen set, copy intent, density, and interactions.
+- Commit the built v1.0.0 bundle under `public/vendor/evidence-risk-review-admin`.
+- Keep Composer legacy advisory bypasses scoped to CI compatibility cells only; do not commit `audit.block-insecure=false` to `composer.json`.
 
 ## Review Checklist
 
@@ -36,3 +38,5 @@ This file mirrors durable rules for Claude Code and other Claude-compatible agen
 - The Blade shell handles missing built assets with a useful non-crashing message.
 - No AskMyDocs or host-specific leaks in `src/`, `config/`, `routes/`, `resources/js`, tests, or Composer dependencies.
 - Before W7, the remote CI gate means no required checks are failing or pending. W7 introduces GitHub Actions; after that, every PR must wait for configured CI to pass.
+- Verify npm locks with `npx -p npm@10 npm ci` when dependencies or lock files change.
+- If local Playwright hangs three times on this workstation, document the exemption and require online Playwright CI before merge.
