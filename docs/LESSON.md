@@ -39,3 +39,4 @@
 - Library CSS should be copied from the processed Vite manifest output, not raw `resources/css`, so embedded consumers get the same CSS as the Laravel auto-mount bundle without running Tailwind on dependency files.
 - Settings and other one-off action handlers are part of the embedded API contract too. They must use the same configured endpoint context as query hooks; tests for those paths should render the page with `ApiEndpointsProvider` because embedded mode intentionally suppresses the shell navigation.
 - Embedded React package exports that externalize `react` and `react-dom` must publish them as `peerDependencies` and keep them in `devDependencies` for local builds. Leaving them only in `dependencies` risks nested React installs and invalid hook calls in host apps.
+- Scoped npm packages need explicit public publish intent. Add `publishConfig.access: public` before the first release so `npm publish` cannot default to private scoped-package behavior.

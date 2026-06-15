@@ -256,12 +256,15 @@
 - Fixed the fourth Codex pass by exporting the configured endpoint context accessor, routing `SettingsPage` probe through it, and adding a Vitest case that renders `SettingsPage` with `ApiEndpointsProvider` and verifies `/custom/api/taxonomy`.
 - Codex Connector review on commit `e04dab3` also reported a valid embedded-package blocker: React and ReactDOM were externalized by the library build but still published as regular dependencies. Two other comments in that pass were stale/incorrect because `package.json` already had `version: 1.0.0` and embedded API config was already context-wired.
 - Fixed the React peer blocker by moving `react` and `react-dom` to `peerDependencies` while keeping them in `devDependencies` for local build/test, then regenerated `package-lock.json` with npm 10.
+- Codex Connector review on commit `0ce3bab` reported one valid npm release blocker: scoped packages need explicit public publish access. Other inline comments in that pass were stale repeats of already-fixed `version`, embedded API context, and React peer dependency findings.
+- Fixed the scoped npm blocker by adding `publishConfig.access: public` and regenerating `package-lock.json` with npm 10.
 - W8 post-fourth-Codex local gates passed:
   - `npx -p npm@10 npm ci`
   - `npm run typecheck`
   - `npm run test` (`10 files, 31 tests`)
   - `npm run build`
   - `npm pack --dry-run --json`
+  - `npm publish --dry-run` (confirmed `public access` dry-run; login warning is expected without publishing)
   - `npm audit`
   - `composer validate --strict --no-check-publish --no-interaction --no-ansi`
   - `vendor/bin/phpunit` (`10 tests, 412 assertions`)
