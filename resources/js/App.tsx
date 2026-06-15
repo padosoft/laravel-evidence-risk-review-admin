@@ -9,6 +9,7 @@ import { ReviewsPage } from './pages/ReviewsPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { TaxonomyPage } from './pages/TaxonomyPage';
 import { TryPage } from './pages/TryPage';
+import { ApiEndpointsProvider } from './lib/queries';
 import { Shell } from './shell/Shell';
 
 function Providers({
@@ -31,7 +32,11 @@ function Providers({
 
   const resolved = runtimeConfig(config);
 
-  const content = <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+  const content = (
+    <QueryClientProvider client={queryClient}>
+      <ApiEndpointsProvider config={resolved}>{children}</ApiEndpointsProvider>
+    </QueryClientProvider>
+  );
 
   if (embedded) {
     return <MemoryRouter>{content}</MemoryRouter>;

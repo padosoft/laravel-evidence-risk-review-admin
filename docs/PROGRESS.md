@@ -239,15 +239,20 @@
   - Library build did not externalize `react/jsx-runtime` / `react/jsx-dev-runtime`.
   - Generated `dist/index.d.ts` imported a non-existent `../css/panel.css` path.
 - Fixed the second Codex pass by adding package version `1.0.0`, externalizing JSX runtime modules, removing the side-effect CSS import from the library entry, copying `resources/css/panel.css` to `dist/style.css`, and verifying `npm pack --dry-run --json`.
+- Codex Connector reviewed commit `39bd6f7dc6` and reported:
+  - A stale/incorrect package version warning; `package.json` already contains `version: 1.0.0` and `npm pack --dry-run --json` passes.
+  - P1: embedded config did not reach API calls because hooks used a module-level singleton endpoints client.
+  - P1: `dist/style.css` copied raw source CSS instead of processed Vite/PostCSS output.
+- Fixed the third Codex pass by adding an `ApiEndpointsProvider` context wired from resolved runtime config, adding Vitest coverage that embedded `config.api_base` reaches `/custom/api/reviews`, and copying library CSS from the Vite manifest output.
 - W8 post-Codex local gates passed:
   - `npm run build`
   - `npm pack --dry-run --json`
   - `npm run typecheck`
-  - `npm run test` (`10 files, 29 tests`)
+  - `npm run test` (`10 files, 30 tests`)
   - `vendor/bin/phpunit` (`10 tests, 412 assertions`)
   - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
   - `vendor/bin/pint --test`
 
 ## Open Items
 
-- Commit and push second Codex fixes, rerun CI and final Codex review on the new commit, then merge, tag `v1.0.0`, and publish GitHub Release.
+- Commit and push third Codex fixes, rerun CI and final Codex review on the new commit, then merge, tag `v1.0.0`, and publish GitHub Release.

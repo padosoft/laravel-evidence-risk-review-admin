@@ -35,3 +35,5 @@
 - If README advertises embedded React imports, the release must include a real package export and library build (`dist/index.js`, `dist/index.d.ts`, `dist/style.css`), not only the auto-mount browser bundle.
 - Empty/root `EVR_ADMIN_PREFIX` is a valid root mount. Route registration and runtime `mount_prefix` normalization must both preserve it as `''`; only asset paths and API base should fall back when blank.
 - NPM export readiness needs `package.json` `version`, JSX runtime externals (`react/jsx-runtime`, `react/jsx-dev-runtime`), and declarations that do not side-effect import missing CSS paths. Keep CSS as an explicit `./style.css` export.
+- Embedded mode API calls must not use a module-level singleton client when the React app accepts `config` props. Provide configured endpoints through React context so host-supplied `api_base` affects every query/mutation.
+- Library CSS should be copied from the processed Vite manifest output, not raw `resources/css`, so embedded consumers get the same CSS as the Laravel auto-mount bundle without running Tailwind on dependency files.
