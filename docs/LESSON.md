@@ -23,3 +23,9 @@
 - Playwright `page.goto('/')` resolves to the origin root, not the configured admin basename. Standalone E2E must visit `/admin/evidence-risk-review...` so BrowserRouter basename matches.
 - If a Playwright run times out while its web server is active, port 4173 can remain occupied; on Windows `netstat -ano | findstr :4173` identifies the process to stop.
 - W6 must not hard-require the core PHP package because admin supports Laravel 11/12/13 and consumes HTTP only. Use a core-compatible HTTP fixture in Testbench for host-boot gates; keep real core package installation as host responsibility.
+- W7 CI pins Illuminate/Testbench per matrix cell with `composer require --no-update ...` before `composer update`; this keeps the admin package Laravel 11/12/13-compatible while local development may resolve Laravel 13 by default.
+- Use `composer validate --strict --no-check-publish` in CI because full publish validation can hang on this workstation and is not needed for every matrix cell.
+- GitHub Actions Node 22 uses npm 10, so `package-lock.json` must be verified with `npx -p npm@10 npm ci`; a lock generated under newer npm can pass locally but fail online with missing optional dependency entries.
+- Composer 2.10 blocks insecure transitive framework versions during `composer update`; for legacy Laravel 11 compatibility cells, run `composer config audit.block-insecure false` inside CI only, not in the committed package `composer.json`.
+- In the CI matrix, pin runtime Illuminate packages separately from `orchestra/testbench`; use `composer require --dev --no-update orchestra/testbench:...` or Composer moves Testbench from `require-dev` to `require` in the temporary CI manifest.
+- On this workstation, Playwright 1.60 can leave the E2E server alive on port 4173 and hang without useful stdout. After three local timeouts, apply the approved local-gate exemption, kill the listener, and rely on GitHub Actions for the Playwright gate on the PR.
