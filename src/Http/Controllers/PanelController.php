@@ -20,7 +20,7 @@ final class PanelController extends Controller
         return view('evidence-risk-review-admin::panel', [
             'runtimeConfig' => [
                 'api_base' => $this->apiBase(),
-                'mount_prefix' => $this->trimmedPath('mount_prefix', self::DEFAULT_MOUNT_PREFIX),
+                'mount_prefix' => $this->mountPrefix(),
                 'theme_default' => $this->themeDefault(),
                 'asset_path' => $this->trimmedPath('asset_path', self::DEFAULT_ASSET_PATH),
             ],
@@ -32,6 +32,11 @@ final class PanelController extends Controller
         $base = rtrim($this->stringConfig('api_base', self::DEFAULT_API_BASE), '/');
 
         return $base === '' ? self::DEFAULT_API_BASE : $base;
+    }
+
+    private function mountPrefix(): string
+    {
+        return trim((string) config('evidence-risk-review-admin.mount_prefix', self::DEFAULT_MOUNT_PREFIX), '/');
     }
 
     private function trimmedPath(string $key, string $default): string

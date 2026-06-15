@@ -27,6 +27,13 @@ describe('API client', () => {
     expect(routeBase(config)).toBe('/admin/custom');
   });
 
+  it('preserves root mount prefixes for root-mounted admin panels', () => {
+    const config = runtimeConfig({ mount_prefix: '/' });
+
+    expect(config.mount_prefix).toBe('');
+    expect(routeBase(config)).toBe('/');
+  });
+
   it('creates an axios client with credentials enabled', () => {
     const client = createApiClient({ api_base: '/custom/api' });
 

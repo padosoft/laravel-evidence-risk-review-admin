@@ -32,3 +32,5 @@
 - W8 release packages must commit `public/vendor/evidence-risk-review-admin` despite normal development ignore habits; otherwise installed hosts would see the Blade missing-assets fallback until they build the package frontend themselves.
 - `Illuminate\Support\Js::from()` emits a `JSON.parse('...')` expression with escaped JSON; feature tests that need exact runtime config should decode that payload instead of asserting plain JSON substrings.
 - Runtime config should normalize whitespace-wrapped paths and reject invalid themes in both PHP and TypeScript so host env typos degrade to stable defaults instead of producing broken basenames or asset paths.
+- If README advertises embedded React imports, the release must include a real package export and library build (`dist/index.js`, `dist/index.d.ts`, `dist/style.css`), not only the auto-mount browser bundle.
+- Empty/root `EVR_ADMIN_PREFIX` is a valid root mount. Route registration and runtime `mount_prefix` normalization must both preserve it as `''`; only asset paths and API base should fall back when blank.

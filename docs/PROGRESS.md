@@ -210,25 +210,31 @@
 - Implemented W8 hardening:
   - Normalized runtime `api_base`, `mount_prefix`, `asset_path`, and `theme_default` in PHP and TypeScript.
   - Added PHPUnit/Vitest coverage for whitespace-wrapped runtime config and invalid theme fallback.
+  - Fixed Codex P2 feedback by preserving root `EVR_ADMIN_PREFIX=/` as runtime `mount_prefix: ''` and adding root-mount PHPUnit/Vitest coverage.
   - Changed release packaging so `public/vendor/evidence-risk-review-admin` is no longer ignored.
   - Built the release bundle under `public/vendor/evidence-risk-review-admin`.
+  - Fixed Codex P1 feedback by adding a real embedded package export with library build output under `dist/`.
   - Updated `CHANGELOG.md` for `1.0.0 - 2026-06-15`.
   - Refreshed `AGENTS.md`, `CLAUDE.md`, `docs/RULES.md`, and repo/Claude skills with W7/W8 CI/release lessons.
 - W8 local gates passed so far:
   - `npx -p npm@10 npm ci`
   - `vendor/bin/pint --test`
   - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
-  - `vendor/bin/phpunit` (`9 tests, 398 assertions`)
+  - `vendor/bin/phpunit` (`10 tests, 412 assertions`)
   - `npm audit`
   - `npm run typecheck`
-  - `npm run test` (`10 files, 28 tests`)
+  - `npm run test` (`10 files, 29 tests`)
   - `npm run build`
   - `git diff --check`
 - W8 local blockers:
   - `composer validate --strict --no-check-publish --no-interaction --no-ansi` timed out three times on this workstation; applying the known local Composer timeout exemption and requiring CI Composer validate before merge.
   - `npm run test:e2e` still timed out locally after the Playwright script simplification; no port 4173 listener remained. Online Playwright CI remains mandatory before merge.
 - Final local Copilot deep review attempt was blocked by plan usage limit: `additional_spend_limit_reached`. Per fallback rules, switch to ChatGPT Codex Connector on the W8 PR and verify it responds on the current commit.
+- Codex Connector reviewed commit `b0288e06ec` and reported two actionable findings:
+  - P1: README advertised embedded imports but the release only shipped an auto-mount bundle.
+  - P2: root `EVR_ADMIN_PREFIX=/` was normalized back to the default admin prefix in runtime config.
+- Fixed Codex findings by adding `resources/js/index.ts`, `vite.lib.config.ts`, `tsconfig.lib.json`, package `exports`, `dist/` build output, embedded README style import, root mount preservation, and PHP/Vitest root-mount coverage.
 
 ## Open Items
 
-- Push W8, open PR, trigger Codex Connector final deep review, wait for CI/review, merge, tag `v1.0.0`, and publish GitHub Release.
+- Commit and push Codex fixes, rerun CI and final Codex review on the new commit, then merge, tag `v1.0.0`, and publish GitHub Release.

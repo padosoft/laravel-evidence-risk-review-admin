@@ -32,14 +32,14 @@ export function runtimeConfig(overrides?: Partial<EvidenceRiskReviewAdminRuntime
 
   return {
     api_base: normalizeApiBase(merged.api_base),
-    mount_prefix: normalizePath(merged.mount_prefix, DEFAULT_RUNTIME_CONFIG.mount_prefix),
+    mount_prefix: normalizeMountPrefix(merged.mount_prefix),
     theme_default: normalizeTheme(merged.theme_default),
     asset_path: normalizePath(merged.asset_path, DEFAULT_RUNTIME_CONFIG.asset_path),
   };
 }
 
 export function routeBase(config: EvidenceRiskReviewAdminRuntimeConfig): string {
-  const base = normalizePath(config.mount_prefix, DEFAULT_RUNTIME_CONFIG.mount_prefix);
+  const base = normalizeMountPrefix(config.mount_prefix);
 
   return base === '' ? '/' : `/${base}`;
 }
@@ -54,6 +54,10 @@ function normalizePath(value: string | undefined, fallback: string): string {
   const path = (value ?? fallback).trim().replace(/^\/+|\/+$/g, '');
 
   return path === '' ? fallback : path;
+}
+
+function normalizeMountPrefix(value: string | undefined): string {
+  return (value ?? DEFAULT_RUNTIME_CONFIG.mount_prefix).trim().replace(/^\/+|\/+$/g, '');
 }
 
 function normalizeTheme(value: string | undefined): 'dark' | 'light' {
