@@ -234,7 +234,20 @@
   - P1: README advertised embedded imports but the release only shipped an auto-mount bundle.
   - P2: root `EVR_ADMIN_PREFIX=/` was normalized back to the default admin prefix in runtime config.
 - Fixed Codex findings by adding `resources/js/index.ts`, `vite.lib.config.ts`, `tsconfig.lib.json`, package `exports`, `dist/` build output, embedded README style import, root mount preservation, and PHP/Vitest root-mount coverage.
+- Codex Connector reviewed commit `bc59913eb0` and reported three additional NPM export blockers:
+  - Missing `package.json` `version`.
+  - Library build did not externalize `react/jsx-runtime` / `react/jsx-dev-runtime`.
+  - Generated `dist/index.d.ts` imported a non-existent `../css/panel.css` path.
+- Fixed the second Codex pass by adding package version `1.0.0`, externalizing JSX runtime modules, removing the side-effect CSS import from the library entry, copying `resources/css/panel.css` to `dist/style.css`, and verifying `npm pack --dry-run --json`.
+- W8 post-Codex local gates passed:
+  - `npm run build`
+  - `npm pack --dry-run --json`
+  - `npm run typecheck`
+  - `npm run test` (`10 files, 29 tests`)
+  - `vendor/bin/phpunit` (`10 tests, 412 assertions`)
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/pint --test`
 
 ## Open Items
 
-- Commit and push Codex fixes, rerun CI and final Codex review on the new commit, then merge, tag `v1.0.0`, and publish GitHub Release.
+- Commit and push second Codex fixes, rerun CI and final Codex review on the new commit, then merge, tag `v1.0.0`, and publish GitHub Release.

@@ -34,3 +34,4 @@
 - Runtime config should normalize whitespace-wrapped paths and reject invalid themes in both PHP and TypeScript so host env typos degrade to stable defaults instead of producing broken basenames or asset paths.
 - If README advertises embedded React imports, the release must include a real package export and library build (`dist/index.js`, `dist/index.d.ts`, `dist/style.css`), not only the auto-mount browser bundle.
 - Empty/root `EVR_ADMIN_PREFIX` is a valid root mount. Route registration and runtime `mount_prefix` normalization must both preserve it as `''`; only asset paths and API base should fall back when blank.
+- NPM export readiness needs `package.json` `version`, JSX runtime externals (`react/jsx-runtime`, `react/jsx-dev-runtime`), and declarations that do not side-effect import missing CSS paths. Keep CSS as an explicit `./style.css` export.

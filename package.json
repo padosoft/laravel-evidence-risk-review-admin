@@ -1,5 +1,6 @@
 {
   "name": "@padosoft/laravel-evidence-risk-review-admin",
+  "version": "1.0.0",
   "private": false,
   "type": "module",
   "main": "./dist/index.js",
@@ -13,7 +14,7 @@
     "./style.css": "./dist/style.css"
   },
   "scripts": {
-    "build": "vite build && vite build --config vite.lib.config.ts && tsc -p tsconfig.lib.json",
+    "build": "vite build && vite build --config vite.lib.config.ts && tsc -p tsconfig.lib.json && node scripts/copy-library-style.mjs",
     "e2e:serve": "node scripts/serve-e2e.mjs",
     "test": "vitest run",
     "test:e2e": "npm run build && playwright test",

@@ -13,7 +13,19 @@ export default defineConfig({
       fileName: () => 'index.js',
     },
     rollupOptions: {
-      external: ['@tanstack/react-query', 'axios', 'clsx', 'lucide-react', 'react', 'react-dom', 'react-dom/client', 'react-router-dom', 'tailwind-merge'],
+      external: [
+        '@tanstack/react-query',
+        'axios',
+        'clsx',
+        'lucide-react',
+        'react',
+        'react-dom',
+        'react-dom/client',
+        'react/jsx-dev-runtime',
+        'react/jsx-runtime',
+        'react-router-dom',
+        'tailwind-merge',
+      ],
       output: {
         assetFileNames: 'style.[ext]',
       },
