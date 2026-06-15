@@ -124,7 +124,18 @@
   - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
   - `vendor/bin/phpunit` (`6 tests, 379 assertions`)
   - `git diff --check`
+- Subtask PR #10 was merged into `macro/w5-playwright-e2e`.
+- W5 macro local gates passed after subtask merge:
+  - `npm run typecheck`
+  - `npm run build`
+  - `npm run test` (`10 files, 27 tests`)
+  - `npm audit`
+  - `vendor/bin/pint --test`
+  - `vendor/bin/phpstan analyse --memory-limit=512M --no-progress`
+  - `vendor/bin/phpunit` (`6 tests, 379 assertions`)
+  - `git diff --check origin/main...HEAD`
+  - `npm run test:e2e` (`6 passed`)
 
 ## Open Items
 
-- Merge W5 subtask PR into `macro/w5-playwright-e2e`, then macro PR into `main`.
+- Open and merge W5 macro PR into `main`.
